@@ -21,4 +21,5 @@ public class AccountController {
     AccountResponse onLogin(@RequestBody LoginParam body) {
         return service.onLogin(body);
     }
+    void testing() {}
 }
