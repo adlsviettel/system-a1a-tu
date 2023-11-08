@@ -1,0 +1,6 @@
+{
+  "system_error": "Unspecified system error",
+  "auth_error": "Username or password is not valid",
+  "user_change_pass_error": "Old password is not valid",
+  "user_not_found_error": "THe ID {0} account could not be found"
+}
