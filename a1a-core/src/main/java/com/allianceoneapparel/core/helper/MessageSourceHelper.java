@@ -20,9 +20,7 @@ public class MessageSourceHelper extends AbstractMessageSource {
     protected MessageFormat resolveCode(@NonNull String code, Locale locale) {
         String resName = STR. "msg_\{ locale.getLanguage() }.json" ;
         try (InputStream jsonLang = this.getClass().getClassLoader().getResourceAsStream(resName)) {
-            Map<String, String> messages =
-                    new ObjectMapper().readValue(jsonLang, new TypeReference<>() {
-                    });
+            Map<String, String> messages = new ObjectMapper().readValue(jsonLang, new TypeReference<>() {});
             var message = messages.get(code);
             if (message != null) {
                 return new MessageFormat(message, locale);
