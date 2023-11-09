@@ -1,8 +1,12 @@
 package com.allianceoneapparel.account.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.io.Encoders;
+import io.jsonwebtoken.jackson.io.JacksonDeserializer;
+import io.jsonwebtoken.lang.Maps;
 import io.jsonwebtoken.security.Keys;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +15,7 @@ import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Jwts;
 import com.allianceoneapparel.account.entity.Account;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -59,12 +64,14 @@ public class JwtService {
             Map<String, Object> extraClaims,
             Account userDetails,
             long expiration
-    )  {
+    ) {
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(userDetails);
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
+                .claim("account", mapper.readValue(json, Map.class))
                 .setSubject(userDetails.getUsername())
-//                .setSubject(new ObjectMapper().writeValueAsString(userDetails))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
