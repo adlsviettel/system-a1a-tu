@@ -1,6 +1,5 @@
-package com.allianceoneapparel.account.repository;
+package com.allianceoneapparel.account;
 
-import com.allianceoneapparel.account.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

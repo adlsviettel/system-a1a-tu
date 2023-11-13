@@ -1,7 +1,7 @@
-package com.allianceoneapparel.account;
+package com.allianceoneapparel.config;
 
 
-import com.allianceoneapparel.account.jwt.JwtAuthenticationFilter;
+import com.allianceoneapparel.AuthAccountURL;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +12,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
@@ -28,12 +29,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     private static final String[] WHITE_LIST_URL = {
-            "/api/v2/account/**",
-            "/api/v2/demo",
-            "/api/v2/demo/**",
+            AuthAccountURL.AUTH + "/**",
+            "/v2/api-docs/**",
+            "/v3/api-docs/**",
+            "/actuator/**",
+            "/v3/api-docs/**",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui/**",
+            "/swagger-ui",
+            "/swagger-ui/",
+            "/webjars/**",
+            "/swagger-ui.html"
     };
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthFilter;
+    private final LogoutHandler logoutHandler;
 
     @Bean
     public Customizer<CorsConfigurer<HttpSecurity>> corsConfigurationSource() {
@@ -54,11 +67,15 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((req) ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                )
+                                .anyRequest()
+                                .permitAll()
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout(LogoutConfigurer::permitAll);
+                .logout(logout -> logout.logoutUrl("api/v2/auth/logout")
+                        .addLogoutHandler(logoutHandler)
+                        .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext())));
         return http.build();
     }
 }

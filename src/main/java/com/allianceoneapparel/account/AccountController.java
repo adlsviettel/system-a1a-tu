@@ -1,39 +1,25 @@
 package com.allianceoneapparel.account;
 
-import com.allianceoneapparel.account.model.AccountRequest;
-import com.allianceoneapparel.account.model.AccountResponse;
-import com.allianceoneapparel.account.service.AccountService;
-import com.allianceoneapparel.core.common.ResponseAPI;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.allianceoneapparel.AuthAccountURL;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import java.security.Principal;
 
 @RestController
-@RequestMapping("api/v2/account")
+@RequestMapping(AuthAccountURL.ACCOUNT)
 @RequiredArgsConstructor
 public class AccountController {
 
-    private final AccountService accountService;
+    private final AccountService service;
 
-    @PostMapping("/login")
-    public ResponseAPI<AccountResponse> authenticate(
-            @RequestBody AccountRequest request
+    @PatchMapping("/change-password")
+    public ResponseEntity<?> changePassword(
+            @RequestBody ChangePasswordRequest request,
+            Principal connectedUser
     ) {
-        return accountService.authenticate(request);
-    }
-
-    @PostMapping("/refresh-token")
-    public ResponseAPI<AccountResponse> refreshToken(
-            HttpServletRequest request,
-            HttpServletResponse response
-    ) throws IOException {
-        return accountService.refreshToken(request, response);
+        service.changePassword(request, connectedUser);
+        return ResponseEntity.ok().build();
     }
 }

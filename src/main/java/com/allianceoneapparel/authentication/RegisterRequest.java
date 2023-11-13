@@ -1,4 +1,4 @@
-package com.allianceoneapparel.account.model;
+package com.allianceoneapparel.authentication;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountRequest {
+public class RegisterRequest {
     private String username;
+    private String fullName;
     private String password;
 }

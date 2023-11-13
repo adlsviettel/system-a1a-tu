@@ -1,6 +1,6 @@
-package com.allianceoneapparel.account;
+package com.allianceoneapparel.config;
 
-import com.allianceoneapparel.account.repository.AccountRepository;
+import com.allianceoneapparel.account.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

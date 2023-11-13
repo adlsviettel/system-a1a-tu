@@ -1,4 +1,4 @@
-package com.allianceoneapparel.account.entity;
+package com.allianceoneapparel.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -30,17 +30,24 @@ public class Account implements UserDetails {
     private byte[] password;
 
     @Column(name = "AccountName", nullable = false)
-    private String name;
-
-    @Column(name = "Token")
-    @JsonIgnore
-    private String accessToken;
+    private String fullName;
 
     @Column(name = "IsActive")
     private boolean isActive;
 
+    @Column(name = "AccountType")
+    @Enumerated(EnumType.ORDINAL)
+    private AccountPositionType position;
+
+    @Column(name = "Department")
+    private String department;
+
+    @Column(name = "Email")
+    private String email;
+
     @Column(name = "Gender")
-    private short gender;
+    @Enumerated(EnumType.ORDINAL)
+    private AccountGenderType gender;
 
     @JsonIgnore
     @Override
@@ -82,4 +89,17 @@ public class Account implements UserDetails {
         return true;
     }
 
+}
+
+enum AccountGenderType {
+    REMOVE_ZERO_TO_START_AT_ONE,
+    MALE,
+    FEMALE,
+}
+
+
+enum AccountPositionType {
+    REMOVE_ZERO_TO_START_AT_ONE,
+    STAFF,
+    MANAGER
 }
