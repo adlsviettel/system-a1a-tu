@@ -2,6 +2,7 @@
   "system_error": "Lỗi hệ thống không xác định",
   "rq_not_valid_error": "Yêu cầu không hợp lệ. Vui lòng kiểm tra lại thông tin",
   "auth_error": "Tài khoản hoặc mật khẩu không chính xác",
-  "auth_change_pass_error": "Mật khẩu cũ không chính xác",
+  "user_old_password_error": "Mật khẩu cũ không chính xác",
+  "user_new_password_error": "Mật khẩu xác nhận không giống mật khẩu mới",
   "user_not_found_error": "Mã ID {0} không được tìm thấy trong hệ thống"
 }

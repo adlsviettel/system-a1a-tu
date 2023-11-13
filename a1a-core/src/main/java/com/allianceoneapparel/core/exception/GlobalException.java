@@ -8,10 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.net.BindException;
 
 @RestControllerAdvice
 @RequiredArgsConstructor
@@ -23,7 +23,7 @@ public class GlobalException {
     public ResponseEntity<ResponseAPI<Object>> handleException(Exception exception) {
         log.error(exception.getMessage());
         exception.printStackTrace();
-        String msg = (exception.getMessage() == null) ? localize.getMsg(Constants.SYSTEM_ERROR) : exception.getMessage();
+        String msg = localize.getMsg(Constants.SYSTEM_ERROR);
         var response = new ResponseAPI<>(500, msg, null);
         return ResponseEntity.status(500).body(response);
     }
@@ -38,7 +38,9 @@ public class GlobalException {
 
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ResponseAPI<Object>> handleBindException(BindException e) {
-        var response = new ResponseAPI<>(400, localize.getMsg(Constants.REQUEST_NOT_VALID), null);
+        var exMsg = e.getAllErrors().get(0).getDefaultMessage();
+        var error = localize.getMsg(exMsg);
+        var response = new ResponseAPI<>(400, error, null);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 

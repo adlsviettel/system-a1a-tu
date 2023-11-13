@@ -2,6 +2,7 @@
   "system_error": "Unspecified system error",
   "rq_not_valid_error": "Request is not valid",
   "auth_error": "Username or password is not valid",
-  "user_change_pass_error": "Old password is not valid",
+  "user_old_password_error": "Old password is not valid",
+  "user_new_password_error": "Password are not the same",
   "user_not_found_error": "THe ID {0} account could not be found"
 }

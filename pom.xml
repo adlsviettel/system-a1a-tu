@@ -33,10 +33,10 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-            <groupId>com.allianceoneapparel</groupId>
-            <artifactId>core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+                <groupId>com.allianceoneapparel</groupId>
+                <artifactId>core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
