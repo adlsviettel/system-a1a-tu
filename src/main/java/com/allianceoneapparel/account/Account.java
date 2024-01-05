@@ -28,7 +28,6 @@ public class Account implements UserDetails {
     @JsonIgnore
     @Column(name = "Password", nullable = false)
     private byte[] password;
-
     @Column(name = "AccountName", nullable = false)
     private String fullName;
 
