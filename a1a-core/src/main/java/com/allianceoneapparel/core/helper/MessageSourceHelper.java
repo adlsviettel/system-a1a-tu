@@ -12,13 +12,12 @@ import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.Map;
 
-import static java.lang.StringTemplate.STR;
 
 @Slf4j
 public class MessageSourceHelper extends AbstractMessageSource {
     @Override
     protected MessageFormat resolveCode(@NonNull String code, Locale locale) {
-        String resName = STR. "msg_\{ locale.getLanguage() }.json" ;
+        String resName = String.format("msg_%s.json", locale.getLanguage());
         try (InputStream jsonLang = this.getClass().getClassLoader().getResourceAsStream(resName)) {
             Map<String, String> messages = new ObjectMapper().readValue(jsonLang, new TypeReference<>() {});
             var message = messages.get(code);

@@ -10,15 +10,19 @@
         <module name="core" />
         <module name="account" />
         <module name="a1a-boot" />
+        <module name="a1a-style-master" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="lms" target="21" />
+      <module name="StyleMasterV2" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="StyleMasterV2" options="-parameters" />
       <module name="a1a-boot" options="-parameters" />
+      <module name="a1a-style-master" options="-parameters" />
       <module name="account" options="-parameters" />
       <module name="core" options="-parameters" />
       <module name="lms" options="-parameters" />

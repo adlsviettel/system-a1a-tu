@@ -28,6 +28,8 @@ public class GlobalException {
         return ResponseEntity.status(500).body(response);
     }
 
+
+
     @ExceptionHandler(AppException.class)
     public ResponseEntity<ResponseAPI<Object>> handleAppException(AppException e) {
         log.error(e.getLocalizedMessage());

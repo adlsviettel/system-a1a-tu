@@ -23,6 +23,7 @@
         <module>a1a-account</module>
         <module>a1a-boot</module>
         <module>a1a-core</module>
+        <module>a1a-style-master</module>
     </modules>
 
     <dependencyManagement>
@@ -37,6 +38,17 @@
                 <artifactId>core</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.allianceoneapparel</groupId>
+                <artifactId>a1a-style-master</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.allianceoneapparel</groupId>
+                <artifactId>a1a-boot</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
 </project>
