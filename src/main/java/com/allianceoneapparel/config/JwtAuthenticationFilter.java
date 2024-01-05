@@ -38,7 +38,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
 
-        try {
             if (shouldBypassAuthentication(request)) {
                 filterChain.doFilter(request, response);
                 return;
@@ -52,9 +51,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             processAuthentication(authHeader, request);
 
             filterChain.doFilter(request, response);
-        } catch (ExpiredJwtException jwtException) {
-            //Token Expired
-        }
     }
 
     private boolean shouldBypassAuthentication(HttpServletRequest request) {
@@ -67,15 +63,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private void processAuthentication(String authHeader, HttpServletRequest request) {
         final String jwt = authHeader.substring(7);
-        String username = jwtService.extractUsername(jwt);
-        if (StringUtils.hasText(jwt) && (username != null)) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            var isTokenValid = tokenRepository.findByToken(jwt)
-                    .map(t -> !t.isExpired() && !t.isRevoked())
-                    .orElse(false);
+        if (StringUtils.hasText(jwt)) {
+            String username = jwtService.extractUsername(jwt);
+            if (username != null) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                var isTokenValid = tokenRepository.findByToken(jwt)
+                        .map(t -> !t.isExpired() && !t.isRevoked())
+                        .orElse(false);
 
-            if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
-                authenticateUser(userDetails, request);
+                if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+                    authenticateUser(userDetails, request);
+                }
             }
         }
     }

@@ -12,24 +12,26 @@
     <version>${project.parent.version}</version>
     <name>account</name>
     <description>account</description>
-
     <properties>
         <java.version>21</java.version>
     </properties>
     <dependencies>
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-test</artifactId>-->
-        <!--            <scope>test</scope>-->
-        <!--            <exclusions>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.junit.vintage</groupId>-->
-        <!--                    <artifactId>junit-vintage-engine</artifactId>-->
-        <!--                </exclusion>-->
-        <!--            </exclusions>-->
-        <!--        </dependency>-->
-
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.12.3</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.12.3</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.12.3</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>com.allianceoneapparel</groupId>
             <artifactId>core</artifactId>
